@@ -1,5 +1,5 @@
 {
-  "name": "AurumMY — Gold Intelligence | Harmin Solutions",
+  "name": "AurumMY — Gold Intelligence",
   "short_name": "AurumMY",
   "start_url": "/",
   "display": "standalone",
@@ -7,11 +7,11 @@
   "theme_color": "#090d18",
   "icons": [
     {
-      "src": "/aurummy-logo.webp",
-      "sizes": "128x128",
-      "type": "image/webp",
-      "purpose": "any"
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
     }
   ],
-  "description": "Malaysia and India gold price intelligence. Developed by Harmin Solutions."
+  "description": "Malaysia and India gold price intelligence. Made by Harmin Solutions."
 }
