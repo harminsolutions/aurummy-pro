@@ -24,6 +24,10 @@
     {
       "src": "manifest.webmanifest",
       "use": "@vercel/static"
+    },
+    {
+      "src": "aurummy-logo.webp",
+      "use": "@vercel/static"
     }
   ],
   "routes": [
