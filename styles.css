@@ -17,3 +17,15 @@
 .disclaimer-accept:hover{filter:brightness(1.07)}.disclaimer-accept:focus-visible{outline:3px solid #fff;outline-offset:3px}
 .disclaimer-actions span{font-size:11px;color:#8292aa}
 @media(max-width:650px){.disclaimer-dialog{max-height:92dvh;border-radius:15px}.disclaimer-header{padding:20px 18px 15px}.disclaimer-header h2{font-size:18px}.disclaimer-body{padding:17px 19px;font-size:12.5px}.disclaimer-actions{padding:15px 19px 20px}}
+
+/* Approved AurumMY identity */
+.brand{gap:12px;padding-left:4px;padding-right:4px}
+.brand-mark{width:58px;height:58px;flex:0 0 58px;object-fit:cover;border-radius:13px;border:1px solid rgba(235,200,126,.25);box-shadow:0 5px 20px rgba(0,0,0,.22)}
+.brand strong{font-size:15px;letter-spacing:1.1px}.brand small{letter-spacing:1.2px}
+.brand-maker{font-size:7px!important;color:#dcb878!important;letter-spacing:.8px!important;margin-top:7px!important}
+.developer-credit{display:block;margin-top:14px;padding:11px 10px;border:1px solid rgba(235,200,126,.22);border-radius:10px;color:#aebbd0;font-size:11px;line-height:1.4;text-align:center}
+.developer-credit strong{color:#ebc87e}.developer-credit:hover{background:rgba(235,200,126,.07)}
+.mobile-logo{align-items:center;gap:8px}.mobile-brand-mark{height:34px;width:34px;border-radius:8px;object-fit:cover;vertical-align:middle}
+footer a{color:#d9b773;text-decoration:none}footer a:hover{text-decoration:underline}
+.disclaimer-emblem-image{width:54px;height:54px;object-fit:cover;border:1px solid #695835;border-radius:12px;flex:none}
+@media(max-width:650px){.mobile-logo{display:flex;align-items:center}.mobile-brand-mark{width:32px;height:32px}}
