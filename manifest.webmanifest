@@ -1,1 +1,17 @@
-{"name":"AurumMY — Malaysia Gold Intelligence","short_name":"AurumMY","start_url":"/","display":"standalone","background_color":"#090d18","theme_color":"#090d18","icons":[{"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]}
+{
+  "name": "AurumMY — Gold Intelligence | Harmin Solutions",
+  "short_name": "AurumMY",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#090d18",
+  "theme_color": "#090d18",
+  "icons": [
+    {
+      "src": "/aurummy-logo.webp",
+      "sizes": "128x128",
+      "type": "image/webp",
+      "purpose": "any"
+    }
+  ],
+  "description": "Malaysia and India gold price intelligence. Developed by Harmin Solutions."
+}
