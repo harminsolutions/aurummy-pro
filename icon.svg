@@ -1,1 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128"><rect width="128" height="128" rx="30" fill="#0b1120"/><path d="M30 51 49 31h30l19 20-34 47z" fill="none" stroke="#e9c47a" stroke-width="7" stroke-linejoin="round"/><path d="M30 51h68M49 31l15 67L79 31" fill="none" stroke="#e9c47a" stroke-width="5"/></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="AurumMY icon">
+<defs><linearGradient id="gold" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffe7a4"/><stop offset=".5" stop-color="#e6ae48"/><stop offset="1" stop-color="#ad711c"/></linearGradient><linearGradient id="goldbar" x1="0" y1="0" x2=".8" y2="1"><stop stop-color="#fff3ba"/><stop offset=".55" stop-color="#f4c358"/><stop offset="1" stop-color="#ae7225"/></linearGradient></defs>
+<rect width="128" height="128" rx="28" fill="#0b1832"/>
+<path d="M98 29C85 16 52 15 34 32 16 48 17 85 40 101c22 15 53 6 66-13" fill="none" stroke="url(#gold)" stroke-width="6" stroke-linecap="round"/>
+<g opacity=".45" fill="url(#gold)"><rect x="35" y="66" width="8" height="15" rx="1"/><rect x="47" y="59" width="8" height="22" rx="1"/><rect x="59" y="64" width="8" height="17" rx="1"/><rect x="71" y="52" width="8" height="29" rx="1"/><rect x="83" y="40" width="8" height="41" rx="1"/></g>
+<path d="M28 65 48 45 58 52 72 36 81 43 100 24" fill="none" stroke="url(#gold)" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/><path d="m90 24 11-2-2 12" fill="none" stroke="url(#gold)" stroke-width="4" stroke-linejoin="round"/>
+<path d="M29 91 40 70 85 69 101 89 91 101 34 101Z" fill="url(#goldbar)" stroke="#f5cc77" stroke-width="1.6"/><path d="M40 70 85 69 94 80 36 80Z" fill="#ffecad" opacity=".8"/><path d="M36 80 94 80 91 101 34 101Z" fill="#d69d3b" opacity=".55"/>
+</svg>
