@@ -1,0 +1,11 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+const {spotPerGram,nextPrice,parseTaukemas,parseOneGold,seriesFromYahoo,forecast}=require('../lib/core');
+test('spot conversion precision, 24K and 916',()=>{assert.ok(Math.abs(spotPerGram(4000,4.2)-540.13254)<.001);assert.ok(Math.abs(spotPerGram(4000,4.2,.916)-494.7614)<.01)});
+test('compounded changes are mathematically correct',()=>{assert.ok(Math.abs(nextPrice(458,.01,.005)-464.8929)<1e-9);assert.equal(nextPrice(458,-.01,0),453.42);assert.equal(nextPrice(458,0,0),458);assert.equal(nextPrice(-1,0,0),null)});
+test('parse retailer quotes without mixing retail/buyback',()=>{const html='<h2>Live Gold Price</h2><p>24K (999.9) RM 600.00 / g 22K (916) RM 550.00 / g 18K (750) RM 460.00 / g</p><h2>Live Buy Back Gold Price</h2>24K (999.9) RM 560.00 / g 22K (916) RM 500.00 / g';const p=parseTaukemas(html);assert.equal(p.retail['916'],550);assert.equal(p.buyback['916'],500);assert.equal(p.retail['750'],460);assert.equal(p.retail['999.9'],600)});
+test('missing quote stays missing',()=>{const p=parseTaukemas('Live Gold Price 22K (916) RM 510.00 / g');assert.equal(p.retail['916'],510);assert.equal(p.buyback['916'],undefined);assert.equal(p.retail['585'],undefined)});
+test('one gold parser extracts published date',()=>{const p=parseOneGold('Gold Prices (Updated 23 Nov 2026, 10:00 am) 916-N RM477 / g | 916-S RM487 / g | 999 RM516 / g');assert.equal(p.retail['916'],477);assert.equal(p.retail['999'],516);assert.equal(p.buyback['916'],undefined)});
+test('unavailable history produces no manufactured forecast',()=>{const p=forecast([],[]);assert.equal(p.ready,false);assert.equal(p.range,null)});
+test('history produces transparent rolling backtest',()=>{const world=Array.from({length:55},(_,i)=>({day:new Date(Date.UTC(2026,0,1+i)).toISOString().slice(0,10),value:3000*(1+.001*i+.003*Math.sin(i))})),fx=world.map(x=>({day:x.day,value:4.2+.01*Math.sin(Number(x.day.slice(-2)))}));const p=forecast(world,fx);assert.equal(p.ready,true);assert.ok(p.backtests>=25);assert.ok(p.range>0);assert.ok(p.mae>=0);assert.ok(p.directional>=0&&p.directional<=1)});
+test('Yahoo chart conversion skips nulls',()=>{const j={chart:{result:[{timestamp:[1720000000,1720086400],indicators:{quote:[{close:[2400,null]}]}}]}};assert.equal(seriesFromYahoo(j).length,1)});

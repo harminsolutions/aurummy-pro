@@ -1,0 +1,15 @@
+'use strict';
+const {spotPerGram,parseTaukemas,parseOneGold,seriesFromYahoo,forecast,isPrice}=require('../lib/core');
+const TTL=5*60*1000,cache={at:0,data:null};
+async function get(url,kind='json') {const c=new AbortController(),t=setTimeout(()=>c.abort(),8500);try{const r=await fetch(url,{headers:{'User-Agent':'Mozilla/5.0 (compatible; AurumMY/3.0; public gold market dashboard)','Accept':kind==='html'?'text/html':'application/json'},signal:c.signal});if(!r.ok)throw new Error(`HTTP ${r.status}`);return kind==='html'?r.text():r.json()}finally{clearTimeout(t)}}
+async function collect(){
+ const work={gold:get('https://api.gold-api.com/price/XAU'),fx:get('https://open.er-api.com/v6/latest/USD'),taukemas:get('https://taukemas.com/','html'),onegold:get('https://onegold.com.my/','html'),goldHistory:get('https://query1.finance.yahoo.com/v8/finance/chart/GC=F?range=3mo&interval=1d'),fxHistory:get('https://query1.finance.yahoo.com/v8/finance/chart/MYR=X?range=3mo&interval=1d')};
+ const keys=Object.keys(work),settled=await Promise.allSettled(Object.values(work));const raw={},status={};settled.forEach((s,i)=>{raw[keys[i]]=s.status==='fulfilled'?s.value:null;status[keys[i]]=s.status==='fulfilled'?'available':'unavailable'});
+ const xau=Number(raw.gold?.price),fx=Number(raw.fx?.rates?.MYR);const spot=isPrice(xau)&&isPrice(fx)?spotPerGram(xau,fx):null;
+ const retailers=[raw.taukemas&&parseTaukemas(raw.taukemas),raw.onegold&&parseOneGold(raw.onegold)].filter(Boolean);
+ const historyWorld=raw.goldHistory?seriesFromYahoo(raw.goldHistory):[],historyFx=raw.fxHistory?seriesFromYahoo(raw.fxHistory):[];
+ const model=forecast(historyWorld,historyFx);
+ const fxDate=raw.fx?.time_last_update_utc||null,goldDate=raw.gold?.updatedAt||raw.gold?.updated_at||null;
+ return {asOf:new Date().toISOString(),gold:{usdOz:isPrice(xau)?xau:null,updatedAt:goldDate,source:'Gold API',url:'https://gold-api.com/'},fx:{usdMyr:isPrice(fx)?fx:null,updatedAt:fxDate,source:'ExchangeRate-API',url:'https://www.exchangerate-api.com/'},spot:{myrGram:spot,source:'Calculated Malaysia spot reference',note:'Gold spot converted to MYR; not a local jewellery retail quotation'},retailers,model,providers:status,notes:['Published shop quotations may lag market changes and may exclude workmanship or additional fees.','History uses gold futures (GC=F) and USD/MYR Yahoo Finance proxy, not the retailer’s own historical daily quotations.','Live prices are informational; always confirm the actual local shop quote before purchase.']};
+}
+module.exports=async function handler(req,res){if(req.method!=='GET'){res.setHeader('Allow','GET');return res.status(405).json({error:'Method not allowed'})}res.setHeader('Cache-Control','public, s-maxage=300, stale-while-revalidate=60');if(cache.data&&Date.now()-cache.at<TTL)return res.status(200).json(cache.data);try{const data=await collect();cache.data=data;cache.at=Date.now();return res.status(200).json(data)}catch(e){return res.status(503).json({error:'Market data temporarily unavailable',details:e.message})}};
